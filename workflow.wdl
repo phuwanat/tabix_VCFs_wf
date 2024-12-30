@@ -28,10 +28,12 @@ task run_tabixing {
         Int memSizeGB = 2
         Int threadCount = 1
         Int diskSizeGB = 2*round(size(vcf, "GB")) + 20
+        String out_name = basename(vcf, ".vcf.gz")
     }
     
     command <<<
-    tabix -p vcf ~{vcf}
+    mv ~{vcf} /cromwell_root/
+    tabix -p vcf /cromwell_root/~{out_name}.vcf.gz
     >>>
 
     output {
